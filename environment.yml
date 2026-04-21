@@ -1,0 +1,15 @@
+---
+name: p5rem
+channels:
+  - conda-forge
+  - nodefaults
+
+dependencies:
+  - cbor2
+  - diskcache
+  - numpy >=2.0.0
+  - pyactivestorage
+  - pyfive >=0.5.0
+  # testing
+  - pytest
+  - pytest-cov
