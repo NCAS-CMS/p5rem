@@ -9,7 +9,7 @@ dependencies:
   - diskcache
   - numpy >=2.0.0
   - pyactivestorage
-  - pyfive >=0.5.0
+  - pyfive >=1.2.0
   # testing
   - pytest
   - pytest-cov
