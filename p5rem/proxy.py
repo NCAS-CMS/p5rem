@@ -54,6 +54,8 @@ class _RemoteDatasetID(DatasetID):
 		self._ptype = _AtomicProxyType(meta["dtype"])
 		self._global_heaps: dict[str, Any] = {}
 		self.posix = False
+		self._max_block = None
+		self._batch_size = None
 		self.pseudo_chunking_size = 4 * 1024 * 1024
 		self._msg_offset = 0
 		self.property_offset = 0
@@ -97,8 +99,19 @@ class _RemoteDatasetID(DatasetID):
 
 		raise RuntimeError("remote dataset index is supplied by server metadata")
 
-	def _select_chunks(self, indexer: Any, out: Any, dtype: Any) -> None:
-		"""Batch-fetch all required chunks in one GET_CHUNKS request."""
+	def _select_chunks(
+		self,
+		indexer: Any,
+		out: Any,
+		dtype: Any,
+		max_block: int | None = None,
+		batch_size: int | None = None,
+	) -> None:
+		"""Batch-fetch chunks through the p5rem session protocol.
+
+		Pyfive's file-level batching options do not apply to remote requests.
+		"""
+		del max_block, batch_size
 
 		chunks = self._get_required_chunks(indexer)
 		if not chunks:
