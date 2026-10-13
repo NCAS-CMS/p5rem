@@ -23,6 +23,9 @@ except ImportError:
 from .proxy import rDataset, rFile
 from .session import Session, p5remSession
 
+from importlib.metadata import version, PackageNotFoundError
+
+
 __all__ = [
 	"BootstrappedProcess",
 	"BootstrapError",
@@ -37,3 +40,15 @@ __all__ = [
 	"rDataset",
 	"rFile",
 ]
+
+
+try:
+    __version__ = version("p5rem")
+except PackageNotFoundError as exc:
+    msg = (
+        "p5rem package not found, please run `pip install -e .` before "
+        "importing the package."
+    )
+    raise PackageNotFoundError(
+        msg,
+    ) from exc
